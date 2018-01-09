@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 504872793}
   - component: {fileID: 504872792}
   - component: {fileID: 504872791}
+  - component: {fileID: 504872794}
   m_Layer: 0
   m_Name: compScreenBackground
   m_TagString: Untagged
@@ -567,7 +568,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 5ef563d4e93c1d44daecbb4ed28a205b, type: 2}
+  - {fileID: 2100000, guid: cb17d71747b0a4742bb7367c190516d7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -608,6 +609,37 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 504872789}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!328 &504872794
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 504872789}
+  m_Enabled: 0
+  m_VideoClip: {fileID: 32900000, guid: 75196fc685a2cd9408b00808387e7eae, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 399025409}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: _MainTex
+  m_RenderMode: 1
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 1
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
+  m_Url: 
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
 --- !u!1 &537742868
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +650,7 @@ GameObject:
   - component: {fileID: 537742869}
   - component: {fileID: 537742871}
   - component: {fileID: 537742870}
+  - component: {fileID: 537742872}
   m_Layer: 5
   m_Name: terminalText
   m_TagString: Untagged
@@ -675,15 +708,93 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'run praxis.sh
-
-'
+  m_Text: 
 --- !u!222 &537742871
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 537742868}
+--- !u!82 &537742872
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 537742868}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 43c8bf31611775d46838ccb240195e05, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1001 &613453796
 Prefab:
   m_ObjectHideFlags: 0
@@ -1149,7 +1260,6 @@ GameObject:
   - component: {fileID: 1507957700}
   - component: {fileID: 1507957699}
   - component: {fileID: 1507957698}
-  - component: {fileID: 1507957702}
   m_Layer: 0
   m_Name: compScreen
   m_TagString: Untagged
@@ -1225,37 +1335,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: -35, z: 0}
---- !u!328 &1507957702
-VideoPlayer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1507957697}
-  m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 75196fc685a2cd9408b00808387e7eae, type: 3}
-  m_TargetCameraAlpha: 1
-  m_TargetCamera3DLayout: 0
-  m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 0}
-  m_TimeReference: 0
-  m_TargetMaterialRenderer: {fileID: 0}
-  m_TargetMaterialProperty: _MainTex
-  m_RenderMode: 3
-  m_AspectRatio: 2
-  m_DataSource: 0
-  m_PlaybackSpeed: 1
-  m_AudioOutputMode: 1
-  m_TargetAudioSources: []
-  m_DirectAudioVolumes: []
-  m_Url: 
-  m_EnabledAudioTracks: 
-  m_DirectAudioMutes: 
-  m_ControlledAudioTrackCount: 0
-  m_PlayOnAwake: 1
-  m_SkipOnDrop: 1
-  m_Looping: 0
-  m_WaitForFirstFrame: 1
-  m_FrameReadyEventEnabled: 0
 --- !u!1 &1564887430
 GameObject:
   m_ObjectHideFlags: 0
@@ -1418,7 +1497,12 @@ MonoBehaviour:
   computerCamera: {fileID: 399025409}
   renderText: {fileID: 8400000, guid: f72a2ac31825bfd4fa7fc8718d6cd990, type: 2}
   desker: {fileID: 0}
-  terminalText: {fileID: 0}
+  introAnimation: {fileID: 504872794}
+  terminalText: {fileID: 537742870}
+  compScreen: {fileID: 504872791}
+  screenMat: {fileID: 2100000, guid: 5ef563d4e93c1d44daecbb4ed28a205b, type: 2}
+  loadingSoundSource: {fileID: 537742872}
+  loadingSound: {fileID: 8300000, guid: 43c8bf31611775d46838ccb240195e05, type: 3}
 --- !u!1 &2058291761
 GameObject:
   m_ObjectHideFlags: 0

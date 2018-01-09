@@ -20,38 +20,62 @@ public class compScreenEvents : MonoBehaviour
     private VideoPlayer introAnimation;
     [SerializeField]
     private Text terminalText;
+    private string terminalTextContent;
+    [SerializeField]
+    private Renderer compScreen;
+    [SerializeField]
+    private Material screenMat;
+    [SerializeField]
+    private AudioSource loadingSoundSource;
+    [SerializeField]
+    private AudioClip loadingSound;
 
     void Start()
     {
-        computerCamera.targetTexture = null;
+        introAnimation.loopPointReached += IntroOver;
+        terminalText.enabled = false;
         compTriggerEntered = false;
+        terminalTextContent = terminalText.text;
+        terminalTextContent = "run praxis.sh";
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (!compTriggerEntered)
             {
-                if (!compTriggerEntered)
-                {
-                    compTriggerEntered = true;
-                    computerCamera.targetTexture = renderText;
-                }
-            }
-            if (!Input.GetButtonDown("Fire1"))
-            {
-                compTriggerEntered = false;
+                compTriggerEntered = true;
+                introAnimation.enabled = true;
             }
 
         }
 
     }
     // Update is called once per frame
+    private void IntroOver(VideoPlayer intro)
+    {
+        if (compTriggerEntered)
+        {
+            introAnimation.enabled = false;
+            compScreen.material = screenMat;
+            terminalText.enabled = true;
+            compTriggerEntered = false;
+            StartCoroutine(textLoading());
+        }
+    }
+    IEnumerator textLoading()
+    {
+        foreach (char letter in terminalTextContent.ToCharArray())
+        {
+            terminalText.text += letter;
+            if (loadingSound)
+                loadingSoundSource.PlayOneShot(loadingSound);
+            yield return 0;
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
     void Update()
     {
-        if (!introAnimation.isPlaying && )
-        {
-
-        }
+        
     }
 }
