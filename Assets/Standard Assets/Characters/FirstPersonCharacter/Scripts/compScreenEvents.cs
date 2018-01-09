@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class compScreenEvents : MonoBehaviour
 {
-
     // Use this for initialization
+    private FirstPersonController mousLok;
     private bool compTriggerEntered;
-
+    [SerializeField]
+    private GameObject FPSCharacterController;
     [SerializeField]
     private Camera computerCamera;
     [SerializeField]
@@ -32,6 +34,7 @@ public class compScreenEvents : MonoBehaviour
 
     void Start()
     {
+        mousLok = FPSCharacterController.GetComponent<FirstPersonController>();
         introAnimation.loopPointReached += IntroOver;
         terminalText.enabled = false;
         compTriggerEntered = false;
@@ -46,10 +49,19 @@ public class compScreenEvents : MonoBehaviour
             {
                 compTriggerEntered = true;
                 introAnimation.enabled = true;
+                beHumble();
             }
 
         }
 
+    }
+    private void beHumble()
+    {
+        FPSCharacterController.GetComponentInChildren<Camera>().fieldOfView = 40;
+        FPSCharacterController.GetComponent<CharacterController>().height = 1.0f;
+        mousLok.accessingMouseLook();
+        mousLok.ySense = 0;
+        mousLok.xSense = 0;
     }
     // Update is called once per frame
     private void IntroOver(VideoPlayer intro)

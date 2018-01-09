@@ -1100,19 +1100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c24702f54bf364180dc9dee97d66fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &1288169025
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1288169023}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1322372313 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100002, guid: 6578fc10a85feef45b9a20a2e09241db, type: 3}
@@ -1329,8 +1316,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1507957697}
   m_LocalRotation: {x: 0, y: -0.30070576, z: 0, w: 0.953717}
-  m_LocalPosition: {x: 0.01, y: -0.126, z: -12.55}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.158, y: -0.353, z: -12.31}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -1494,6 +1481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be47ace91370766419a7c95c314f3006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FPSCharacterController: {fileID: 1288169023}
   computerCamera: {fileID: 399025409}
   renderText: {fileID: 8400000, guid: f72a2ac31825bfd4fa7fc8718d6cd990, type: 2}
   desker: {fileID: 0}
