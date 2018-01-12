@@ -11,6 +11,8 @@ public class compScreenEvents : MonoBehaviour
     private FirstPersonController mousLok;
     private bool compTriggerEntered;
     [SerializeField]
+    private int timesCompTriggered;
+    [SerializeField]
     private GameObject FPSCharacterController;
     [SerializeField]
     private Camera computerCamera;
@@ -48,32 +50,48 @@ public class compScreenEvents : MonoBehaviour
             if (!compTriggerEntered)
             {
                 compTriggerEntered = true;
-                introAnimation.enabled = true;
-                beHumble();
+                mousLok.ySense = 0;
+                mousLok.xSense = 0;
+                FPSCharacterController.GetComponentInChildren<Camera>().fieldOfView = 40;
+                FPSCharacterController.GetComponent<CharacterController>().height = 1.0f;
+                if (timesCompTriggered == 0)
+                {
+                    introAnimation.enabled = true;
+                    timesCompTriggered++;
+                }
+                if (!computerCamera.enabled)
+                {
+                    computerCamera.enabled = true;
+                }
             }
 
         }
 
     }
-    private void beHumble()
+    private void OnTriggerExit(Collider other)
     {
-        FPSCharacterController.GetComponentInChildren<Camera>().fieldOfView = 40;
-        FPSCharacterController.GetComponent<CharacterController>().height = 1.0f;
-        mousLok.accessingMouseLook();
-        mousLok.ySense = 0;
-        mousLok.xSense = 0;
+        if(other.tag == "Player")
+        {
+            if (timesCompTriggered >= 0)
+            {
+                compTriggerEntered = false;
+                mousLok.ySense = 2f;
+                mousLok.xSense = 2f;
+                FPSCharacterController.GetComponentInChildren<Camera>().fieldOfView = 60;
+                FPSCharacterController.GetComponent<CharacterController>().height = 1.4f;
+                computerCamera.enabled = false;
+            }
+            
+        }
     }
     // Update is called once per frame
     private void IntroOver(VideoPlayer intro)
     {
-        if (compTriggerEntered)
-        {
-            introAnimation.enabled = false;
-            compScreen.material = screenMat;
-            terminalText.enabled = true;
-            compTriggerEntered = false;
-            StartCoroutine(textLoading());
-        }
+        introAnimation.enabled = false;
+        compScreen.material = screenMat;
+        terminalText.enabled = true;
+        compTriggerEntered = false;
+        StartCoroutine(textLoading());
     }
     IEnumerator textLoading()
     {

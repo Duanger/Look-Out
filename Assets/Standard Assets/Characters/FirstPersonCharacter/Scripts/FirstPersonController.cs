@@ -243,8 +243,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_MouseLook.YSensitivity = ySense;
             m_MouseLook.XSensitivity = xSense;
         }
-
-
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
             Rigidbody body = hit.collider.attachedRigidbody;
