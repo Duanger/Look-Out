@@ -1440,7 +1440,7 @@ GameObject:
   - component: {fileID: 1744393193}
   m_Layer: 0
   m_Name: compTrigger
-  m_TagString: Untagged
+  m_TagString: Triggerable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1481,6 +1481,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be47ace91370766419a7c95c314f3006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  compTriggerEntered: 0
+  timesCompTriggered: 0
   FPSCharacterController: {fileID: 1288169023}
   computerCamera: {fileID: 399025409}
   renderText: {fileID: 8400000, guid: f72a2ac31825bfd4fa7fc8718d6cd990, type: 2}

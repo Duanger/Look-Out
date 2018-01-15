@@ -8,8 +8,9 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class compScreenEvents : MonoBehaviour
 {
     // Use this for initialization
+ 
+    [HideInInspector]public bool compTriggerEntered = false;
     private FirstPersonController mousLok;
-    private bool compTriggerEntered;
     [SerializeField]
     private int timesCompTriggered;
     [SerializeField]
@@ -20,8 +21,8 @@ public class compScreenEvents : MonoBehaviour
     private RenderTexture renderText;
     [SerializeField]
     private GameObject desker;
-    [SerializeField]
-    private VideoPlayer introAnimation;
+    [HideInInspector]
+    public VideoPlayer introAnimation;
     [SerializeField]
     private Text terminalText;
     private string terminalTextContent;
@@ -39,7 +40,6 @@ public class compScreenEvents : MonoBehaviour
         mousLok = FPSCharacterController.GetComponent<FirstPersonController>();
         introAnimation.loopPointReached += IntroOver;
         terminalText.enabled = false;
-        compTriggerEntered = false;
         terminalTextContent = terminalText.text;
         terminalTextContent = "run praxis.sh";
     }
@@ -47,42 +47,42 @@ public class compScreenEvents : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            if (!compTriggerEntered)
-            {
-                compTriggerEntered = true;
-                mousLok.ySense = 0;
-                mousLok.xSense = 0;
-                FPSCharacterController.GetComponentInChildren<Camera>().fieldOfView = 40;
-                FPSCharacterController.GetComponent<CharacterController>().height = 1.0f;
-                if (timesCompTriggered == 0)
-                {
-                    introAnimation.enabled = true;
-                    timesCompTriggered++;
-                }
-                if (!computerCamera.enabled)
-                {
-                    computerCamera.enabled = true;
-                }
-            }
+            computerCamera.enabled = true;
+            compTriggerEntered = true;
+            timesCompTriggered++;
 
         }
 
     }
-    private void OnTriggerExit(Collider other)
+    public IEnumerator disableControls()
+    {
+        if (timesCompTriggered == 1)
+        {
+            introAnimation.enabled = true;
+        }
+        FPSCharacterController.transform.position = new Vector3(0.4915411f, -1.219996f, -13.36155f);
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().fieldOfView = 40;
+        //FPSCharacterController.transform.Rotate(0, -10, 0);
+        FPSCharacterController.GetComponent<CharacterController>().height = 1.0f;
+        yield return null;
+    }
+    /*private void OnTriggerExit(Collider other)
     {
         if(other.tag == "Player")
         {
-            if (timesCompTriggered >= 0)
+            if (compTriggerEntered == true)
             {
-                compTriggerEntered = false;
-                mousLok.ySense = 2f;
-                mousLok.xSense = 2f;
-                FPSCharacterController.GetComponentInChildren<Camera>().fieldOfView = 60;
-                FPSCharacterController.GetComponent<CharacterController>().height = 1.4f;
                 computerCamera.enabled = false;
+                compTriggerEntered = false;
             }
             
         }
+    }*/
+    public IEnumerator enableControls()
+    {
+        FPSCharacterController.GetComponentInChildren<Camera>().fieldOfView = 60;
+        FPSCharacterController.GetComponent<CharacterController>().height = 1.4f;
+        yield return null;
     }
     // Update is called once per frame
     private void IntroOver(VideoPlayer intro)
@@ -106,6 +106,6 @@ public class compScreenEvents : MonoBehaviour
     }
     void Update()
     {
-        
+
     }
 }

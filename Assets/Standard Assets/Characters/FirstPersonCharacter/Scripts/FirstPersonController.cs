@@ -4,6 +4,7 @@ using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
 
+
 namespace UnityStandardAssets.Characters.FirstPerson
 {
     [RequireComponent(typeof (CharacterController))]
@@ -27,8 +28,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-        [HideInInspector] public float ySense, xSense;
         private Camera m_Camera;
+        private compScreenEvents compScript;
         private bool m_Jump;
         private float m_YRotation;
         private Vector2 m_Input;
@@ -41,6 +42,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
+        private bool m_isTriggered = false;
 
         // Use this for initialization
         private void Start()
@@ -55,6 +57,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+            compScript = GameObject.FindGameObjectWithTag("Triggerable").GetComponent<compScreenEvents>();
         }
 
 
@@ -62,6 +65,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Update()
         {
             RotateView();
+            //EnterInput();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
             {
@@ -96,6 +100,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             float speed;
             GetInput(out speed);
+            EnterInput();
             // always move along the camera forward as it is the direction that it being aimed at
             Vector3 desiredMove = transform.forward*m_Input.y + transform.right*m_Input.x;
 
@@ -204,8 +209,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void GetInput(out float speed)
         {
             // Read input
+
             float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
             float vertical = CrossPlatformInputManager.GetAxis("Vertical");
+            if(m_isTriggered)
+            {
+                horizontal = 0;
+                vertical = 0;
+            }
+            if (!m_isTriggered)
+            {
+                horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
+                vertical = CrossPlatformInputManager.GetAxis("Vertical");
+            }
 
             bool waswalking = m_IsWalking;
 
@@ -232,16 +248,35 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 StartCoroutine(!m_IsWalking ? m_FovKick.FOVKickUp() : m_FovKick.FOVKickDown());
             }
         }
+        public void EnterInput()
+        {
+            float fire1 = CrossPlatformInputManager.GetAxis("Fire1");
+            if(fire1 != 0 && compScript.compTriggerEntered)
+            {
+                StopCoroutine(compScript.enableControls());
+                StartCoroutine(compScript.disableControls());
+                m_MouseLook.XSensitivity = 0;
+                m_MouseLook.YSensitivity = 0;
+                m_isTriggered = true;
+            }
+            if(fire1 != 0 && compScript.compTriggerEntered && m_isTriggered)
+            {
+                m_isTriggered = false;
+                if (!m_isTriggered)
+                {
+                    StopCoroutine(compScript.disableControls());
+                    StartCoroutine(compScript.enableControls());
+                    m_MouseLook.XSensitivity = 2.0f;
+                    m_MouseLook.YSensitivity = 2.0f;
+                    compScript.enableControls();
+                }
+            }
+        }
 
 
         private void RotateView()
         {
             m_MouseLook.LookRotation (transform, m_Camera.transform);
-        }
-        public void accessingMouseLook()
-        {
-            m_MouseLook.YSensitivity = ySense;
-            m_MouseLook.XSensitivity = xSense;
         }
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
